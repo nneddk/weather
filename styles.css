@@ -1,4 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Roboto:wght@500&display=swap');
 html, body{
+    margin: 0;
+    height: 100%;
+    font-size: 15px;
+    background-image: linear-gradient(to right, purple, orange);
+}
+
+#content{
     margin: 0;
     height: 100%;
 }
@@ -6,8 +14,249 @@ html, body{
 #time{
     height: 100%;
     display:flex;
+
     flex-direction: column;
-    
+    padding-left: 3em;
     justify-content: center;
-    align-items: center;
+    gap: 1em;
+
 }
+.time-slot{
+    display:flex;
+}
+#current-time, #current-am-or-pm{
+    font-family: 'Monoton', cursive;
+    color: white;
+
+    transition: all 0.3s;
+}
+#current-time{
+    font-size: 18rem;
+}
+#current-am-or-pm{
+    align-self: flex-end;
+    font-size: 9rem;
+}
+.time-slot:hover{
+    text-shadow: 10px 10px rgb(0, 0, 0, 0.5);
+}
+
+.search-location-span{
+    width: 50%;
+    height: 4em;
+    padding-left: 1em;
+    padding-right: 1em;
+
+    border-radius: 9999px;
+    
+    background-color: rgb(0, 0, 0, 0.2);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    transition: all 0.3s;
+
+    
+    
+}
+
+.search-location-span:hover{
+    box-shadow: 4px 4px rgb(0, 0, 0, 0.5);
+}
+#search-location{
+    width: 90%;
+    font-size: 1.6rem;
+
+    outline: none;
+    background-color: transparent;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border: none;
+}
+#search-location-button{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+
+    background-color: transparent;
+    border:none;
+
+    transition: all 0.3s;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(./assets/search/search-white-16.svg);
+}
+
+#search-location-button:hover{
+    background-color: white;
+    background-image: url(./assets/search/search-black-16.svg);
+}
+
+
+/*animation below */
+.shapes{
+    overflow: hidden;
+    z-index: -1;
+}
+.shapes li {
+    top: 10vh;
+    position:absolute;
+	list-style: none;
+	width: 20px;
+	height: 20px;
+	background: rgba(255, 255, 255, 0.2);
+    border: rgba(255, 255, 255, 0.2);
+	animation: animate 25s linear infinite;
+	bottom: 0;
+}
+.shapes li:nth-child(1) {
+    right: 10%;
+	width: 100px;
+	height: 100px;
+	animation-delay: 0s;
+	animation-duration: 12s;
+	border-radius: 50%;
+}
+
+.shapes li:nth-child(2) {
+    right: 10%;
+	width: 120px;
+	height: 120px;
+	animation-delay: 0s;
+	animation-duration: 27s;
+	border-radius: 50%;
+}
+.shapes li:nth-child(3) {
+    right: 15%;
+	width: 130px;
+	height: 130px;
+	animation-delay: 0s;
+	animation-duration: 15s;
+}
+
+.shapes li:nth-child(4) {
+    right: 20%;
+	width: 110px;
+	height: 110px;
+	animation-delay: 0s;
+	animation-duration: 6s;
+	border-radius: 50%;
+}
+
+.shapes li:nth-child(5) {
+    right: 25%;
+	width: 100px;
+	height: 100px;
+	animation-delay: 0s;
+	animation-duration: 30s;
+}
+
+
+.shapes li:nth-child(6) {
+    right: 10%;
+	width: 90px;
+	height: 90px;
+	animation-delay: 0s;
+	animation-duration: 18s;
+	border-radius: 50%;
+}
+
+.shapes li:nth-child(7) {
+    right: 5%;
+	width: 100px;
+	height: 100px;
+	animation-delay: 0s;
+	animation-duration: 33s;
+
+}
+
+.shapes li:nth-child(8) {
+    right: 30%;
+	width: 80px;
+	height: 80px;
+	animation-delay: 0s;
+	animation-duration: 21s;
+	border-radius: 50%;
+}
+
+.shapes li:nth-child(9) {
+    right: 15%;
+	width: 100px;
+	height: 100px;
+	animation-delay: 0s;
+	animation-duration: 12s;
+	border-radius: 50%;
+}
+
+.shapes li:nth-child(10) {
+    right: 20%;
+	width: 120px;
+	height: 120px;
+	animation-delay: 0s;
+	animation-duration: 9s;
+}
+
+@keyframes animate {
+	0% {
+		transform: translateY(0) rotate(0deg);
+		opacity: 0;
+	}
+	50% {
+		transform: translateY(50vh) rotate(360deg);
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(70vh) rotate(720deg);
+		opacity: 0;
+	}
+}
+
+
+
+@media only screen and (max-width: 700px) {
+    #time{
+        padding-left: 1em;
+        gap: 1em;
+    }
+    #current-time{
+        font-size: 4.2rem;
+    }
+    #current-am-or-pm{
+        align-self: flex-end;
+        font-size: 2.1rem;
+    }
+    
+    .search-location-span{
+        width: 80%;
+        padding-left: 1em;
+        padding-right: 1em;
+    
+        border-radius: 9999px;
+        
+        background-color: rgb(0, 0, 0, 0.2);
+    
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    #search-location{
+        width: 90%;
+        font-size: 1.6rem;
+    
+        outline: none;
+        background-color: transparent;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        border: none;
+    }
+    #search-location-button{
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+    
+        background-color: transparent;
+        border:none;
+    
+    }
+  }
