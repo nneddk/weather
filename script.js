@@ -73,7 +73,7 @@ async function updateTemp(location) {
     while (currContent.hasChildNodes()){
       currContent.removeChild(currContent.lastChild);
     }
-    /*
+    
     const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q='+location.value+'&appid=eca5ec86a08e6a56a853ad00606412d8&units=imperial');
     const data = await response.json();
     
@@ -82,8 +82,8 @@ async function updateTemp(location) {
     } else {
       currContent.appendChild(notFound());
     }
-    */
-    currContent.appendChild(locationFound(testData));
+    
+  
 
   }
 
@@ -135,8 +135,19 @@ function locationFound(data){
 
     const placeTemp = document.createElement('div');
     placeTemp.classList.add('place-temp');
-    placeTemp.classList.add('place');
-    placeTemp.textContent = data.main.temp;
+
+    const placeTempNow = document.createElement('div');
+    placeTempNow.classList.add('place-temp-now');
+    placeTempNow.classList.add('place');
+    placeTempNow.textContent = data.main.temp;
+
+    const placeHumid = document.createElement('div');
+    placeHumid.classList.add('place-humid');
+    placeHumid.classList.add('place');
+    placeHumid.textContent = data.main.humidity;
+
+    placeTemp.appendChild(placeTempNow);
+    placeTemp.appendChild(placeHumid);
 
     console.log('temp: ', data.main.temp);
     console.log('humidity: ', data.main.humidity);
@@ -196,12 +207,10 @@ function locationFound(data){
     placeSunset.appendChild(placeSunsetPic);
     placeSunset.appendChild(placeSunsetTime);
 
-    //humidity
+    //current time
+   
 
-    const placeHumid = document.createElement('div');
-    placeHumid.classList.add('place-humid');
-    placeHumid.classList.add('place');
-    placeHumid.textContent = data.main.humidity;
+    
 
     //wind data
     console.log(data.wind.deg);
@@ -232,14 +241,19 @@ function locationFound(data){
     placeWind.appendChild(placeWindPic);
     placeWind.appendChild(placeWindData);
 
+    //return home button
+    const returnBack = document.createElement('button');
+    returnBack.setAttribute('type', 'button');
+    returnBack.classList.add('return-back');
+    returnBack.textContent = 'return home';
+
     sideB.appendChild(placeSunrise);
     sideB.appendChild(placeSunset);
 
-    sideB.appendChild(placeHumid);
-    
+
     sideB.appendChild(placeWind);
 
-    
+    sideB.appendChild(returnBack);  
 
     contentFound.appendChild(sideA);
     contentFound.appendChild(sideB);
@@ -268,11 +282,11 @@ function checkDirection() {
   const sideB = document.querySelector('.side-b');
   if (touchendX < touchstartX && window.innerWidth < 700){
     sideA.style.width = '0';
-    sideB.style.width = '80vmin';
+    sideB.style.width = '90vmin';
   }
   if (touchendX > touchstartX && window.innerWidth < 700){
     sideB.style.width = '0';
-    sideA.style.width = '80vmin';
+    sideA.style.width = '90vmin';
   }
 }
 

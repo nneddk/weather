@@ -110,6 +110,8 @@ html, body{
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3, 1fr);
     gap: 1em;
+
+    z-index: 2;
 }
 
 .place-data{
@@ -128,6 +130,13 @@ html, body{
 .place-lat{
     grid-column: 3/5;
 }
+.place-temp{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr); ;
+}
+.place-temp-now{
+    grid-column: 1/4;
+}
 
 .side-b{
     display:grid;
@@ -135,6 +144,7 @@ html, body{
     grid-template-rows: repeat(3, 1fr);
     gap: 1em;
 
+    z-index: 2;
 }
 .place-sunrise-sunset-div{
     display:grid;
@@ -146,10 +156,6 @@ html, body{
 .place-sunset{
     grid-column: 3/5;
 }
-
-.place-humid{
-    grid-column: 1/5;
-}
 .place-wind{
     grid-column: 1/5;
     display:grid;
@@ -160,7 +166,9 @@ html, body{
     display:grid;
 
 }
-
+.return-back{
+    grid-column: 1/5;
+}
 /*animation below */
 .shapes{
     overflow: hidden;
