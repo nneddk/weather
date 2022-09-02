@@ -29,13 +29,15 @@ html, body{
     color: white;
 
     transition: all 0.3s;
+
+    z-index: 2;
 }
 #current-time{
-    font-size: 18rem;
+    font-size: 18vmin;
 }
 #current-am-or-pm{
     align-self: flex-end;
-    font-size: 9rem;
+    font-size: 9vmin;
 }
 .time-slot:hover{
     text-shadow: 10px 10px rgb(0, 0, 0, 0.5);
@@ -93,6 +95,71 @@ html, body{
     background-image: url(./assets/search/search-black-16.svg);
 }
 
+.content-found{
+
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+
+    height: 80%;
+    gap: 1em;
+    margin: 1em;
+
+}
+.side-a{
+    display:grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1em;
+}
+
+.place-data{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1em;
+}
+.place-name{
+    grid-column: 1/4;
+}
+.place-country{
+}
+.place-long{
+    grid-column: 1/3;
+}
+.place-lat{
+    grid-column: 3/5;
+}
+
+.side-b{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1em;
+
+}
+.place-sunrise-sunset-div{
+    display:grid;
+    grid-template-columns: 2fr 4fr;
+}
+.place-sunrise{
+    grid-column: 1/3;
+}
+.place-sunset{
+    grid-column: 3/5;
+}
+
+.place-humid{
+    grid-column: 1/5;
+}
+.place-wind{
+    grid-column: 1/5;
+    display:grid;
+    grid-template-columns: 2fr 4fr;
+}
+
+.place-wind-data{
+    display:grid;
+
+}
 
 /*animation below */
 .shapes{
@@ -105,8 +172,8 @@ html, body{
 	list-style: none;
 	width: 20px;
 	height: 20px;
-	background: rgba(255, 255, 255, 0.2);
-    border: rgba(255, 255, 255, 0.2);
+	background: rgba(128, 0, 128, 0.2);
+    border: rgba(128, 0, 128, 0.2);
 	animation: animate 25s linear infinite;
 	bottom: 0;
 }
@@ -185,7 +252,7 @@ html, body{
 	width: 100px;
 	height: 100px;
 	animation-delay: 0s;
-	animation-duration: 12s;
+	animation-duration: 14s;
 	border-radius: 50%;
 }
 
@@ -214,17 +281,10 @@ html, body{
 
 
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 600px) {
     #time{
         padding-left: 1em;
         gap: 1em;
-    }
-    #current-time{
-        font-size: 4.2rem;
-    }
-    #current-am-or-pm{
-        align-self: flex-end;
-        font-size: 2.1rem;
     }
     
     .search-location-span{
@@ -258,5 +318,21 @@ html, body{
         background-color: transparent;
         border:none;
     
+    }
+    .content-found{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        height: 80%;
+        gap: 1em;
+        margin: 1em;
+    
+    }
+    .side-a{
+        width: 80vmin;
+        overflow:hidden;
+    }
+    .side-b{
+        width: 0;
+        overflow: hidden;
     }
   }
