@@ -5,7 +5,9 @@ html, body{
     font-size: 15px;
     background-image: linear-gradient(to right, purple, orange);
 }
-
+*{
+    border:solid;
+}
 #content{
     margin: 0;
     height: 100%;
@@ -131,6 +133,7 @@ html, body{
     grid-column: 3/5;
 }
 .place-temp{
+    gap: 1em;
     display:grid;
     grid-template-columns: repeat(4, 1fr); ;
 }
@@ -148,21 +151,32 @@ html, body{
 }
 .place-sunrise-sunset-div{
     display:grid;
-    grid-template-columns: 2fr 4fr;
+    grid-template-rows: 2fr 1fr;
 }
+
 .place-sunrise{
     grid-column: 1/3;
 }
 .place-sunset{
     grid-column: 3/5;
 }
+.place-sunrise-pic{
+}
+.place-sunrise-time{
+}
+.place-sunset-pic{
+}
+.place-sunset-time{
+}
 .place-wind{
     grid-column: 1/5;
+    gap: 1em;
     display:grid;
-    grid-template-columns: 2fr 4fr;
+    grid-template-columns: repeat(4, 1fr)
 }
 
 .place-wind-data{
+    grid-column: 2/5;
     display:grid;
 
 }
