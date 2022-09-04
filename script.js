@@ -10,9 +10,11 @@ function mainPage(){
 
     const currentTime = document.createElement('div');
     currentTime.setAttribute('id','current-time');
+    currentTime.classList.add('main-page-time');
 
     const currentAMorPM = document.createElement('div');
     currentAMorPM.setAttribute('id','current-am-or-pm');
+    currentAMorPM.classList.add('main-page-am-or-pm');
 
     timeSlot.appendChild(currentTime);
     timeSlot.appendChild(currentAMorPM);
@@ -56,7 +58,7 @@ document.body.appendChild(mainPage());
 
 //add animated list
 const animatedList = document.createElement('ul');
-    animatedList.classList.add('shapes');
+animatedList.classList.add('shapes');
     for(let i = 0; i<10; i++){
         const shapeDiv = document.createElement('li');
         animatedList.appendChild(shapeDiv);
@@ -66,6 +68,7 @@ document.body.appendChild(animatedList);
 
 //time set
 function startTime() {
+    const placeTime = document.querySelector('.place-time');
     const currentTime = document.getElementById('current-time');
     const currentAMorPM = document.getElementById('current-am-or-pm');
     let today = new Date(), h = today.getHours(), m = today.getMinutes();
@@ -74,6 +77,7 @@ function startTime() {
     h = h ? h: h = 12;
     h = checkTime(h);
     m = checkTime(m);
+    placeTime!=null?placeTime.textContent = h + ':' + m+' '+ampm: 0;
     currentTime!=null?currentTime.textContent = h + ':' + m:0;
     currentAMorPM!=null?currentAMorPM.textContent = ampm:0;
     setTimeout(startTime, 1000);  
@@ -101,6 +105,7 @@ let testData = {
     "sunset": "1662113286"
   },
   "weather":[{
+    "id":"502",
     "main": "rain",
     "description": "light rain"
   }],
@@ -111,12 +116,13 @@ let testData = {
 }
 
 //api call to openweathermap url:  https://openweathermap.org/
-//updateTemp();
+updateTemp();
 async function updateTemp(location) {
     const  currContent = document.getElementById('content');
     while (currContent.hasChildNodes()){
       currContent.removeChild(currContent.lastChild);
     }
+    /*
     const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q='+location.value+'&appid=eca5ec86a08e6a56a853ad00606412d8&units=imperial');
     const data = await response.json();
     
@@ -125,9 +131,10 @@ async function updateTemp(location) {
     } else {
       currContent.appendChild(notFound());
     }
-    /*
+    */
+  
     currContent.appendChild(locationFound(testData));
-  */
+  
 
   }
 
@@ -148,10 +155,12 @@ function locationFound(data){
 
     const placeName = document.createElement('div');
     placeName.classList.add('place-name');
+    placeName.classList.add('place');
     placeName.textContent = data.name;
     
     const placeCountry = document.createElement('div');
     placeCountry.classList.add('place-country');
+    placeCountry.classList.add('place');
     placeCountry.textContent = data.sys.country;
 
     //coordinates
@@ -159,18 +168,28 @@ function locationFound(data){
     const placeLong = document.createElement('div');
     placeLong.classList.add('place-long');
     placeLong.classList.add('place');
-    placeLong.textContent = data.coord.lon;
+    placeLong.textContent = 'lon: '+data.coord.lon;
 
     const placeLat = document.createElement('div');
     placeLat.classList.add('place-lat');
     placeLat.classList.add('place');
-    placeLat.textContent = data.coord.lat;
+    placeLat.textContent = 'lat: '+data.coord.lat;
+
+    placeData.appendChild(placeName);
+    placeData.appendChild(placeCountry);
+    placeData.appendChild(placeLong);
+    placeData.appendChild(placeLat);
     
 
     //temperature farenheit
 
+
+
     const placeTemp = document.createElement('div');
     placeTemp.classList.add('place-temp');
+
+    const placeTempHumid = document.createElement('div');
+    placeTempHumid.classList.add('place-temp-humid');
 
     const placeTempNow = document.createElement('div');
     placeTempNow.classList.add('place-temp-now');
@@ -181,26 +200,32 @@ function locationFound(data){
     placeHumid.classList.add('place-humid');
     placeHumid.classList.add('place');
     placeHumid.textContent = data.main.humidity;
-
-    placeTemp.appendChild(placeTempNow);
-    placeTemp.appendChild(placeHumid);
-
+      
     //weather
 
     const placeWeather = document.createElement('div');
     placeWeather.classList.add('place-weather');
     placeWeather.classList.add('place');
-    placeWeather.textContent = data.weather[0].id;
 
+    const placeWeatherPic = document.createElement('div');
+    placeWeatherPic.classList.add('place-weather-pic');
+    placeWeatherPic.classList.add('place');
+    placeWeatherPic.textContent = data.weather[0].id;
 
-    placeData.appendChild(placeName);
-    placeData.appendChild(placeCountry);
-    placeData.appendChild(placeLong);
-    placeData.appendChild(placeLat);
+    const placeWeatherDesc = document.createElement('div');
+    placeWeatherDesc.classList.add('place-weather-desc');
+    placeWeatherDesc.classList.add('place');
+    placeWeatherDesc.textContent = data.weather[0].description;
+
+    placeWeather.appendChild(placeWeatherPic);
+    placeWeather.appendChild(placeWeatherDesc);
+
+    placeTempHumid.appendChild(placeWeather);
+    placeTempHumid.appendChild(placeTempNow);
+    placeTempHumid.appendChild(placeHumid);
 
     sideA.appendChild(placeData);
-    sideA.appendChild(placeTemp);
-    sideA.appendChild(placeWeather);
+    sideA.appendChild(placeTempHumid);
 
     //side B Div
     const sideB = document.createElement('div');
@@ -210,6 +235,7 @@ function locationFound(data){
     let sunset = new Date(data.sys.sunset * 1000);
   
     function setTime(date){
+      date==null?date = new Date():0;
       let hours = date.getHours(), minutes = date.getMinutes();
       let amorpm = hours > 12 ? 'pm':'am';
       hours = hours % 12;
@@ -219,7 +245,6 @@ function locationFound(data){
       minutes = checkTime(minutes);
 
       return hours+':'+minutes+' '+amorpm;
-      
     }
 
     //sunrise
@@ -269,18 +294,24 @@ function locationFound(data){
     const placeWindData = document.createElement('div');
     placeWindData.classList.add('place-wind-data');
 
-    const placeWindDeg = document.createElement('div');
-    placeWindDeg.classList.add('place-wind-deg');
-    placeWindDeg.classList.add('place');
-    placeWindDeg.textContent = data.wind.deg;
-
     const placeWindSpeed = document.createElement('div');
     placeWindSpeed.classList.add('place-wind-speed');
     placeWindSpeed.classList.add('place');
     placeWindSpeed.textContent = data.wind.speed;
 
-    placeWindData.appendChild(placeWindDeg);
+    const placeWindDeg = document.createElement('div');
+    placeWindDeg.classList.add('place-wind-deg');
+    placeWindDeg.classList.add('place');
+    placeWindDeg.textContent = data.wind.deg;
+
+    const placeWindGust = document.createElement('div');
+    placeWindGust.classList.add('place-wind-gust');
+    placeWindGust.classList.add('place');
+    placeWindGust.textContent = data.wind.gust;
+
     placeWindData.appendChild(placeWindSpeed);
+    placeWindData.appendChild(placeWindDeg);
+    placeWindData.appendChild(placeWindGust);
 
     placeWind.appendChild(placeWindPic);
     placeWind.appendChild(placeWindData);
@@ -289,7 +320,6 @@ function locationFound(data){
     const returnBack = document.createElement('button');
     returnBack.setAttribute('type', 'button');
     returnBack.classList.add('return-back');
-    returnBack.textContent = 'return home';
 
     returnBack.onclick = function(){
       const  currContent = document.getElementById('content');
@@ -301,13 +331,19 @@ function locationFound(data){
       startTime();
     }
 
+    const currentTime = document.createElement('div');
+    currentTime.classList.add('place-time');
+    currentTime.classList.add('place');
+
     sideB.appendChild(placeSunrise);
     sideB.appendChild(placeSunset);
 
 
     sideB.appendChild(placeWind);
 
-    sideB.appendChild(returnBack);  
+    sideB.appendChild(returnBack); 
+    
+    sideB.appendChild(currentTime);
 
     contentFound.appendChild(sideA);
     contentFound.appendChild(sideB);
