@@ -132,6 +132,7 @@ html, body{
     grid-template-rows: 1fr 2fr;
     gap: 1em;
     z-index: 2;
+    transition: all 0.3s;
 }
 
 .place-data{
@@ -211,6 +212,7 @@ html, body{
     gap: 1em;
 
     z-index: 2;
+    transition: all 0.3s;
 }
 .place-sunrise-sunset-div{
     display:grid;
