@@ -16,6 +16,7 @@ html, body{
 #content{
     margin: 0;
     height: 100%;
+    overflow: hidden;
 }
 
 #time{
@@ -26,6 +27,7 @@ html, body{
     padding-left: 3em;
     justify-content: center;
     gap: 1em;
+    overflow: hidden;
 
 }
 .time-slot{
@@ -59,7 +61,7 @@ html, body{
 
     border-radius: 9999px;
     
-    background-color: rgb(0, 0, 0, 0.2);
+    background-color: rgb(0, 0, 0, 0.5);
 
     display: flex;
     align-items: center;
@@ -67,12 +69,13 @@ html, body{
 
     transition: all 0.3s;
 
+    z-index: 2;
     
     
 }
 
 .search-location-span:hover{
-    box-shadow: 4px 4px rgb(0, 0, 0, 0.5);
+    background-color: rgb(0, 0, 0);
 }
 #search-location{
     width: 90%;
@@ -83,6 +86,7 @@ html, body{
     color: white;
     font-family: 'Roboto', sans-serif;
     border: none;
+    z-index: 2;
 }
 #search-location-button{
     width: 3rem;
@@ -121,11 +125,11 @@ html, body{
 
     color:white;
     border-radius: 25px;
-    background-color: rgb(0, 0, 0, 0.2);
+    background-color: rgb(0, 0, 0, 0.5);
 }
 .side-a{
     display:grid;
-    grid-template-rows: 1fr 3fr;
+    grid-template-rows: 1fr 2fr;
     gap: 1em;
     z-index: 2;
 }
@@ -138,7 +142,7 @@ html, body{
 }
 .place-name{
     grid-column: 1/6;
-    font-size: 3.2rem;
+    font-size: 4.8rem;
 }
 .place-country{
     font-size: 1.2rem;
@@ -159,16 +163,18 @@ html, body{
     grid-template-rows: repeat(4, 1fr);
     
 }
-.place-temp-weather-wind{
+
+.place-temp-weather{
     display: grid;
     gap: 1em;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
 }
 .place-weather{
     grid-column: 1/3;
     grid-row: 1/3;
     display: grid;
+    grid-template-columns: 1fr;
     grid-template-rows: 2fr 1fr;
 }
 .place-weather-pic{  
@@ -182,46 +188,26 @@ html, body{
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 2.4rem;
 }
 .place-temp-now{
     grid-row: 1/4;
-    font-size: 3.2rem;
+    font-size: 4.8rem;
+    transition: all 0.3s;
+}
+.place-temp-now:hover{
+    background-color: rgb(0, 0, 0);
 }
 .place-humid{
-    font-size: 1.6rem;
-
-}
-.place-wind{
-    grid-column: 1/5;
-    gap: 1em;
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
-}
-.place-wind-pic{
-    grid-column: 1/3;
-    background-image: url(./assets/logos/wind.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    height:100%;
-
+    font-size: 2.4rem;
 
 }
 
-.place-wind-data{
-    grid-column: 3/5;
-    display:grid;
-    gap:1em;
-
-    font-size: 1.6rem;
-
-}
 
 .side-b{
     display:grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 2fr 1fr 1fr;
+    grid-template-rows: 2fr 1fr 0.3fr;
     gap: 1em;
 
     z-index: 2;
@@ -265,33 +251,47 @@ html, body{
     align-items: center;
     justify-content: center;
 }
+.place-wind{
+    grid-column: 1/5;
+    gap: 1em;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.place-wind-pic{
+    grid-column: 1/3;
+    background-image: url(./assets/logos/wind.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height:100%;
 
+
+}
+
+.place-wind-data{
+    grid-column: 3/5;
+    display:grid;
+    gap:1em;
+
+    font-size: 1.6rem;
+
+}
 .return-back{
     background-image: url(./assets/logos/home.svg);
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
     height:100%;
+    background-size: 8%;
     grid-column: 1;
-    background-color: rgb(0, 0, 0, 0.2);
+    background-color: rgb(0, 0, 0, 0.5);
     border:none;
     border-radius: 25px;
-    grid-column: 1/3;
-}
-.place-time-data{
     grid-column: 1/5;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    font-size: 3.2rem;
+    transition: all 0.3s;
 }
-.place-time{
-    text-align: center;
-}
-.place-time-pic{
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    height:100%;
+.return-back:hover{
+    background-color: rgb(0, 0, 0);
 }
 /*animation below */
 .shapes{
@@ -299,114 +299,25 @@ html, body{
     z-index: -1;
 }
 .shapes li {
-    top: 10vh;
     position:absolute;
 	list-style: none;
-	width: 20px;
-	height: 20px;
+	width: 30px;
+	height: 30px;
+    border-radius: 50%; 
 	background: rgba(128, 0, 128, 0.2);
     border: rgba(128, 0, 128, 0.2);
-	animation: animate 25s linear infinite;
+	animation: animate 10s linear infinite;
 	bottom: 0;
-}
-.shapes li:nth-child(1) {
-    right: 10%;
-	width: 100px;
-	height: 100px;
-	animation-delay: 0s;
-	animation-duration: 12s;
-	border-radius: 50%;
-}
-
-.shapes li:nth-child(2) {
-    right: 10%;
-	width: 120px;
-	height: 120px;
-	animation-delay: 0s;
-	animation-duration: 27s;
-	border-radius: 50%;
-}
-.shapes li:nth-child(3) {
-    right: 15%;
-	width: 130px;
-	height: 130px;
-	animation-delay: 0s;
-	animation-duration: 15s;
-}
-
-.shapes li:nth-child(4) {
-    right: 20%;
-	width: 110px;
-	height: 110px;
-	animation-delay: 0s;
-	animation-duration: 6s;
-	border-radius: 50%;
-}
-
-.shapes li:nth-child(5) {
-    right: 25%;
-	width: 100px;
-	height: 100px;
-	animation-delay: 0s;
-	animation-duration: 30s;
-}
-
-
-.shapes li:nth-child(6) {
-    right: 10%;
-	width: 90px;
-	height: 90px;
-	animation-delay: 0s;
-	animation-duration: 18s;
-	border-radius: 50%;
-}
-
-.shapes li:nth-child(7) {
-    right: 5%;
-	width: 100px;
-	height: 100px;
-	animation-delay: 0s;
-	animation-duration: 33s;
-
-}
-
-.shapes li:nth-child(8) {
-    right: 30%;
-	width: 80px;
-	height: 80px;
-	animation-delay: 0s;
-	animation-duration: 21s;
-	border-radius: 50%;
-}
-
-.shapes li:nth-child(9) {
-    right: 15%;
-	width: 100px;
-	height: 100px;
-	animation-delay: 0s;
-	animation-duration: 14s;
-	border-radius: 50%;
-}
-
-.shapes li:nth-child(10) {
-    right: 20%;
-	width: 120px;
-	height: 120px;
-	animation-delay: 0s;
-	animation-duration: 9s;
 }
 
 @keyframes animate {
 	0% {
-		transform: translateY(0) rotate(0deg);
 		opacity: 0;
 	}
 	50% {
-		transform: translateY(50vh) rotate(360deg);
 		opacity: 1;
 	}
 	100% {
-		transform: translateY(70vh) rotate(720deg);
 		opacity: 0;
 	}
 }
@@ -479,7 +390,7 @@ html, body{
         font-size: 0.6rem;
     }
     .place-weather-pic{  
-        background-size: 80%;
+        background-size: 50%;
     }
     .place-weather-desc{
         display:flex;
@@ -525,5 +436,8 @@ html, body{
     .place-time-pic{
         background-size: 50%;
     }   
+    .return-back{
+        background-size: 10%;
+    }
 
   }

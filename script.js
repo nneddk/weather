@@ -57,14 +57,26 @@ document.body.appendChild(mainPage());
 
 
 //add animated list
+function getRandomInt(max, floor) {
+  return Math.floor(Math.random() * max + floor);
+}
+
+
 const animatedList = document.createElement('ul');
 animatedList.classList.add('shapes');
-    for(let i = 0; i<10; i++){
+    for(let i = 0; i<100; i++){
         const shapeDiv = document.createElement('li');
+        shapeDiv.style.right = getRandomInt(80, 0)+'%';
+        shapeDiv.style.left = getRandomInt(80, 0)+'%';
+        shapeDiv.style.top = getRandomInt(80, 0)+'vh';
+        shapeDiv.style.width = shapeDiv.style.height = getRandomInt(50, 30)+'px';
+        shapeDiv.style.animationDuration = getRandomInt(10,2)+'s';
         animatedList.appendChild(shapeDiv);
+
     }
 
 document.body.appendChild(animatedList);
+
 
 //time set
 function startTime() {
@@ -122,12 +134,13 @@ let testData = {
 //api call to openweathermap url:  https://openweathermap.org/
 //updateTemp();
 async function updateTemp(location) {
+  
     const  currContent = document.getElementById('content');
     while (currContent.hasChildNodes()){
       currContent.removeChild(currContent.lastChild);
     }
-    
-    const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q='+location.value+'&appid=eca5ec86a08e6a56a853ad00606412d8&units=imperial');
+ 
+    const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q='+location.value+'&appid=eca5ec86a08e6a56a853ad00606412d8&units=metric');
     const data = await response.json();
     
     if (response.ok) {
@@ -136,7 +149,7 @@ async function updateTemp(location) {
       currContent.appendChild(notFound());
     }
     
-  
+
     //currContent.appendChild(locationFound(testData));
   
 
@@ -187,8 +200,8 @@ function locationFound(data){
 
     //temperature farenheit
 
-    const placeTempWeatherWind = document.createElement('div');
-    placeTempWeatherWind.classList.add('place-temp-weather-wind');
+    const placeTempWeather = document.createElement('div');
+    placeTempWeather.classList.add('place-temp-weather');
 
     const placeTemp = document.createElement('div');
     placeTemp.classList.add('place-temp');
@@ -196,16 +209,16 @@ function locationFound(data){
     const placeTempNow = document.createElement('div');
     placeTempNow.classList.add('place-temp-now');
     placeTempNow.classList.add('place');
-    placeTempNow.textContent = Math.round(data.main.temp)+'°F';
+    placeTempNow.textContent = Math.round(data.main.temp)+'°C';
 
     let ForC = 0;
     placeTempNow.onclick = function(){
       if(!ForC){
-        let celsius = (data.main.temp - 32)*5/9;
-        placeTempNow.textContent = Math.round(celsius)+'°C';
+        let faren = (data.main.temp * 1.8) + 32;
+        placeTempNow.textContent = Math.round(faren)+'°F';
         ForC = 1;
       }else{
-        placeTempNow.textContent = Math.round(data.main.temp)+'°F';
+        placeTempNow.textContent = Math.round(data.main.temp)+'°C';
         ForC = 0;
       }
       
@@ -220,34 +233,7 @@ function locationFound(data){
     placeTemp.appendChild(placeTempNow);
     placeTemp.appendChild(placeHumid);
 
-    const placeWind = document.createElement('div');
-    placeWind.classList.add('place-wind');
-    placeWind.classList.add('place');
-
-    const placeWindPic = document.createElement('div');
-    placeWindPic.classList.add('place-wind-pic');
-
-    const placeWindData = document.createElement('div');
-    placeWindData.classList.add('place-wind-data');
-
-    const placeWindSpeed = document.createElement('div');
-    placeWindSpeed.classList.add('place-wind-speed');
-    placeWindSpeed.textContent = 'Speed: '+data.wind.speed;
-
-    const placeWindDeg = document.createElement('div');
-    placeWindDeg.classList.add('place-wind-deg');
-    placeWindDeg.textContent = 'Deg: '+data.wind.deg;
-
-    const placeWindGust = document.createElement('div');
-    placeWindGust.classList.add('place-wind-gust');
-    placeWindGust.textContent = 'Gust: '+data.wind.gust;
-
-    data.wind.speed!=null?placeWindData.appendChild(placeWindSpeed):0;
-    data.wind.deg!=null?placeWindData.appendChild(placeWindDeg):0;
-    data.wind.gust!=null?placeWindData.appendChild(placeWindGust):0;
-
-    placeWind.appendChild(placeWindPic);
-    placeWind.appendChild(placeWindData);
+    
     //weather
 
     const placeWeather = document.createElement('div');
@@ -257,7 +243,7 @@ function locationFound(data){
     const placeWeatherPic = document.createElement('div');
     placeWeatherPic.classList.add('place-weather-pic');
     placeWeatherPic.style.backgroundImage ='url(./assets/weather-conditions/'+data.weather[0].icon+'.svg)';
-    //placeWeatherPic.textContent = data.weather[0].icon;
+
 
     const placeWeatherDesc = document.createElement('div');
     placeWeatherDesc.classList.add('place-weather-desc');;
@@ -266,13 +252,13 @@ function locationFound(data){
     placeWeather.appendChild(placeWeatherPic);
     placeWeather.appendChild(placeWeatherDesc);
 
-    placeTempWeatherWind.appendChild(placeWeather);
-    placeTempWeatherWind.appendChild(placeTemp);
-    placeTempWeatherWind.appendChild(placeWind);
+    placeTempWeather.appendChild(placeWeather);
+    placeTempWeather.appendChild(placeTemp);
+    //placeTempWeatherWind.appendChild(placeWind);
     //placeTempHumid.appendChild(placeHumid);
 
     sideA.appendChild(placeData);
-    sideA.appendChild(placeTempWeatherWind);
+    sideA.appendChild(placeTempWeather);
 
     //side B Div
     const sideB = document.createElement('div');
@@ -324,25 +310,36 @@ function locationFound(data){
 
     placeSunset.appendChild(placeSunsetPic);
     placeSunset.appendChild(placeSunsetTime);
-    //current time
-    const placeTimeData = document.createElement('div');
-    placeTimeData.classList.add('place-time-data');
-    placeTimeData.classList.add('place');
+    //current wind
+    const placeWind = document.createElement('div');
+    placeWind.classList.add('place-wind');
+    placeWind.classList.add('place');
 
-    const currentTimePic = document.createElement('div');
-    currentTimePic.classList.add('place-time-pic');
+    const placeWindPic = document.createElement('div');
+    placeWindPic.classList.add('place-wind-pic');
 
-    if(data.dt > data.sys.sunrise){
-      currentTimePic.style.backgroundImage = 'url(./assets/weather-conditions/01d.svg)';
-    }else if(data.dt < data.sys.sunrise){
-      currentTimePic.style.backgroundImage = 'url(./assets/weather-conditions/01n.svg)';
-    }
+    const placeWindData = document.createElement('div');
+    placeWindData.classList.add('place-wind-data');
 
-    const currentTime = document.createElement('div');
-    currentTime.classList.add('place-time');
+    const placeWindSpeed = document.createElement('div');
+    placeWindSpeed.classList.add('place-wind-speed');
+    placeWindSpeed.textContent = 'Speed: '+data.wind.speed;
 
-    placeTimeData.appendChild(currentTimePic);
-    placeTimeData.appendChild(currentTime);
+    const placeWindDeg = document.createElement('div');
+    placeWindDeg.classList.add('place-wind-deg');
+    placeWindDeg.textContent = 'Deg: '+data.wind.deg;
+
+    const placeWindGust = document.createElement('div');
+    placeWindGust.classList.add('place-wind-gust');
+    placeWindGust.textContent = 'Gust: '+data.wind.gust;
+
+    data.wind.speed!=null?placeWindData.appendChild(placeWindSpeed):0;
+    data.wind.deg!=null?placeWindData.appendChild(placeWindDeg):0;
+    data.wind.gust!=null?placeWindData.appendChild(placeWindGust):0;
+
+    placeWind.appendChild(placeWindPic);
+    placeWind.appendChild(placeWindData);
+
 
     //return home button
     const returnBack = document.createElement('button');
@@ -361,7 +358,8 @@ function locationFound(data){
 
     sideB.appendChild(placeSunrise);
     sideB.appendChild(placeSunset);
-    sideB.appendChild(placeTimeData);
+    //sideB.appendChild(placeTimeData);
+    sideB.appendChild(placeWind); 
     sideB.appendChild(returnBack); 
     
     
@@ -392,12 +390,12 @@ function checkDirection() {
   const sideA = document.querySelector('.side-a');
   const sideB = document.querySelector('.side-b');
   if (touchendX < touchstartX && window.innerWidth < 700){
-    sideA.style.width = '0';
-    sideB.style.width = '90vmin';
+    sideA!=null?sideA.style.width = '0':0;
+    sideB!=null?sideB.style.width = '90vmin':0;
   }
   if (touchendX > touchstartX && window.innerWidth < 700){
-    sideB.style.width = '0';
-    sideA.style.width = '90vmin';
+    sideB!=null?sideB.style.width = '0':0;
+    sideA!=null?sideA.style.width = '90vmin':0;
   }
 }
 
